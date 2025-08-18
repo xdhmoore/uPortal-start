@@ -2,8 +2,10 @@
 # within a container.  The portal must be fully assembled (based on tomcatInstall + tomcatDeploy)
 # before building the Docker image.
 
+ARG mirrorPrefix
+
 # This image requires Gradle;  it is not as slim as the web server-only image
-FROM gradle:6.9.1-jdk8-hotspot
+FROM ${mirrorPrefix}gradle:6.9.1-jdk8-hotspot
 
 # Some of the uPortal tech requires elevated privileges
 USER root

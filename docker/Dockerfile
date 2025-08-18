@@ -2,11 +2,14 @@
 # portal must be fully assembled (based on tomcatInstall + tomcatDeploy) before building the Docker
 # image.
 
+ARGS mirrorPrefix
+
 # This image aims for maximum slimness
-FROM adoptopenjdk:8-jdk-hotspot
+FROM ${mirrorPrefix}adoptopenjdk:8-jdk-hotspot
+
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y wget && \
-    apt-get clean -y && rm -rf /var/lib/apt/lists/*
+   apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # For this image, we only need the fully-assembled Tomcat container
 COPY .gradle/tomcat tomcat
@@ -19,4 +22,4 @@ ENTRYPOINT ["tomcat/bin/catalina.sh", "run"]
 
 # The container is healthy if Tomcat can serve the health check page within 3 seconds
 HEALTHCHECK --start-period=1m --interval=1m --timeout=3s \
-    CMD wget --quiet --tries=1 --spider http://localhost:8080/uPortal/health-check || exit 1
+   CMD wget --quiet --tries=1 --spider http://localhost:8080/uPortal/health-check || exit 1

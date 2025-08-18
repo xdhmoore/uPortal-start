@@ -19,6 +19,9 @@ task dockerBuildImageWeb(type: DockerBuildImage) {
     mustRunAfter allprojects.collect { it.tasks.matching { it.name.equals('tomcatDeploy') } }
 
     dockerFile file('docker/Dockerfile')
+    buildArgs = [
+      'mirrorPrefix': dockerMirrorPrefix
+    ]
     inputDir rootProject.projectDir
     tag "${dockerImageBaseName}:${dockerImageVersion}"
 
@@ -31,6 +34,9 @@ task dockerBuildImageCli(type: DockerBuildImage) {
     mustRunAfter allprojects.collect { it.tasks.matching { it.name.equals('tomcatDeploy') } }
 
     dockerFile file('docker/Dockerfile-cli')
+    buildArgs = [
+      'mirrorPrefix': dockerMirrorPrefix
+    ]
     inputDir rootProject.projectDir
     tag "${dockerImageBaseName}-cli:${dockerImageVersion}"
 
@@ -44,7 +50,10 @@ task dockerBuildImageDemo(type: DockerBuildImage) {
     mustRunAfter dockerBuildImageCli
 
     dockerFile file('docker/Dockerfile-demo')
-    buildArgs = [ 'uPortalCliTag': dockerImageVersion ]
+    buildArgs = [
+      'uPortalCliTag': dockerImageVersion,
+      'mirrorPrefix': dockerMirrorPrefix
+    ]
     inputDir rootProject.projectDir
     tag "${dockerImageBaseName}-demo:${dockerImageVersion}"
 
