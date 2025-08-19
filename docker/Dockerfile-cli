@@ -3,9 +3,10 @@
 # before building the Docker image.
 
 ARG mirrorPrefix
+ARG baseImage=gradle:6.9.1-jdk8-hotspot
 
 # This image requires Gradle;  it is not as slim as the web server-only image
-FROM ${mirrorPrefix}gradle:6.9.1-jdk8-hotspot
+FROM ${mirrorPrefix}${baseImage}
 
 # Some of the uPortal tech requires elevated privileges
 USER root

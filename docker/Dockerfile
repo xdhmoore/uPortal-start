@@ -2,10 +2,11 @@
 # portal must be fully assembled (based on tomcatInstall + tomcatDeploy) before building the Docker
 # image.
 
-ARGS mirrorPrefix
+ARG mirrorPrefix
+ARG baseImage=adoptopenjdk:8-jdk-hotspot
 
 # This image aims for maximum slimness
-FROM ${mirrorPrefix}adoptopenjdk:8-jdk-hotspot
+FROM ${mirrorPrefix}${baseImage}
 
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y wget && \
