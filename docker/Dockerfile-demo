@@ -6,6 +6,7 @@ ARG mirrorPrefix
 # Images built with the uPortal Gradle CLI may not be based on the :latest tag
 ARG uPortalCliTag=latest
 
+# TODO rename this to registryPrefix
 # This image requires Gradle;  it is not as slim as the web server-only image
 FROM ${mirrorPrefix}apereo/uportal-cli:$uPortalCliTag
 
